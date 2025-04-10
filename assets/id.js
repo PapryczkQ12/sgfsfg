@@ -75,3 +75,13 @@ eye.addEventListener('click', () => {
         input.value = original;
     }
 })
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(registration => {
+      console.log('Service Worker zarejestrowany:', registration);
+    })
+    .catch(error => {
+      console.log('Rejestracja Service Workera nie powiodła się:', error);
+    });
+}
