@@ -1,21 +1,22 @@
-const CACHE_NAME = "mobywatel-cache-v1";
-const urlsToCache = [
-  "/",
-  "/assets/id.css?v=1.5",
-  "/assets/main.css?v=2.0",
-  "/assets/id.js?v=1.1"
-];
-
-self.addEventListener("install", event => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open('static-cache-v1').then(cache => {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/styles.css', // Twój plik CSS
+        '/script.js', // Twój plik JavaScript
+        '/icons/icon-192x192.png',
+        '/icons/icon-512x512.png'
+      ]);
+    })
   );
 });
 
-self.addEventListener("fetch", event => {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
