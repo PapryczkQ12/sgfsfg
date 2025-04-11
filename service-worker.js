@@ -1,22 +1,9 @@
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open('static-cache-v1').then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/styles.css', // Twój plik CSS
-        '/script.js', // Twój plik JavaScript
-        '/icons/icon-192x192.png',
-        '/icons/icon-512x512.png'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
-});
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('✅ Zarejestrowano service worker:', reg.scope))
+        .catch(err => console.error('❌ Błąd SW:', err));
+    });
+  }
+</script>
